@@ -18,8 +18,6 @@ const App = () => {
   const [Page, setPage] = useState(1);
   const [Filter, setFilter] = useState("");
   const [DebouncedFilter, setDebouncedFilter] = useState("");
-
-  console.log(coin);
   const SwitchPages = (increment) => {
     clearTimeout(refPages);
     refPages.current = setTimeout(() => setPage(increment), 1000);
