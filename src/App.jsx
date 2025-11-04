@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Oval } from "react-loader-spinner";
 import Navbar from "./components/Navbar.jsx";
 import Option from "./components/Option.jsx";
@@ -8,12 +8,22 @@ import Stack from "@mui/material/Stack";
 import CryptoCard from "./components/CryptoCard.jsx";
 const App = () => {
   const key = import.meta.env.VITE_API_KEY;
+
+  const refPages = useRef(null);
+  const RefItem = useRef(null);
   const [coin, setCoin] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [item, setItem] = useState(10);
   const [Page, setPage] = useState(1);
-  console.log(Page);
+  const SwitchPages = (increment) => {
+    clearTimeout(refPages);
+    refPages.current = setTimeout(() => setPage(increment), 1000);
+  };
+  const ExtendItems = (increment) => {
+    clearTimeout(RefItem);
+    RefItem.current = setTimeout(() => setItem(() => increment), 1000);
+  };
 
   useEffect(() => {
     const controller = new AbortController();
@@ -97,7 +107,7 @@ const App = () => {
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 w-full sm:w-auto">
             <span> Show Limit:</span>
             <Option
-              Set={(e) => setItem(e)}
+              Set={(e) => ExtendItems(e)}
               value={item}
               option={[
                 { key: 5, value: 5 },
@@ -109,7 +119,7 @@ const App = () => {
             />
             <span> Show page:</span>
             <Option
-              Set={(e) => setPage(e)}
+              Set={(e) => SwitchPages(e)}
               value={Page}
               option={[
                 { key: 1, value: 1 },

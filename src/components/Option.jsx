@@ -1,8 +1,6 @@
 import { FormControl, MenuItem, Select } from "@mui/material";
 
 const Option = ({ option, Set, value }) => {
-  console.log(option);
-
   return (
     <FormControl
       size="small"
@@ -12,7 +10,7 @@ const Option = ({ option, Set, value }) => {
         labelId="filter-select-label"
         id="filter-select"
         label="Filter Search"
-        value={value || ""}
+        value={value}
         className="text-sm dark:text-gray-200"
         onChange={(e) => Set(Number(e.target.value))}
         sx={{

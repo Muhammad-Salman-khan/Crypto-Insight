@@ -62,7 +62,7 @@ const CryptoCard = ({
             <TrendingDownIcon fontSize="small" />
           )}
           {isPositive ? "+" : ""}
-          {price_change_24h.toFixed(2) || 0}%
+          {Number(price_change_24h)?.toFixed(2) ?? 0}%
         </span>
       </div>
       <div className="grid grid-cols-2 gap-3 text-sm text-gray-300">
