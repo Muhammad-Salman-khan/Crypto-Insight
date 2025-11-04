@@ -1,6 +1,8 @@
 import { FormControl, MenuItem, Select } from "@mui/material";
 
-const Option = () => {
+const Option = ({ option, Set, value }) => {
+  console.log(option);
+
   return (
     <FormControl
       size="small"
@@ -10,7 +12,9 @@ const Option = () => {
         labelId="filter-select-label"
         id="filter-select"
         label="Filter Search"
+        value={value || ""}
         className="text-sm dark:text-gray-200"
+        onChange={(e) => Set(Number(e.target.value))}
         sx={{
           color: "inherit",
           ".MuiOutlinedInput-notchedOutline": { border: "none" },
@@ -19,10 +23,11 @@ const Option = () => {
           },
         }}
       >
-        <MenuItem value="all">All</MenuItem>
-        <MenuItem value="gainers">Top Gainers</MenuItem>
-        <MenuItem value="losers">Top Losers</MenuItem>
-        <MenuItem value="volume">High Volume</MenuItem>
+        {option.map(({ key, value }) => (
+          <MenuItem id={key} value={value}>
+            {value}
+          </MenuItem>
+        ))}
       </Select>
     </FormControl>
   );

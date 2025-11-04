@@ -11,8 +11,9 @@ const App = () => {
   const [coin, setCoin] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [page, setPage] = useState(15);
-  console.log(page);
+  const [item, setItem] = useState(10);
+  const [Page, setPage] = useState(1);
+  console.log(Page);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -20,7 +21,7 @@ const App = () => {
     const Fetch = async () => {
       try {
         const res = await fetch(
-          `${key}&order=market_cap_desc&per_page=${page}&page=12&sparkline=false`,
+          `${key}&order=market_cap_desc&per_page=${item}&page=${Page}&sparkline=false`,
           { signal }
         );
         if (!res.ok)
@@ -38,7 +39,7 @@ const App = () => {
     };
     Fetch();
     return () => controller.abort();
-  }, [page]);
+  }, [Page, item]);
   if (loading) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
@@ -91,12 +92,38 @@ const App = () => {
           {/* Left group: Options + Search */}
           <div className="w-full px-4 sm:max-w-2xl sm:mx-auto md:w-fit md:mx-0 lg:max-w-4xl">
             <Search />
-            <button onClick={() => setPage((e) => e + 5)}>Next</button>
           </div>
 
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 w-full sm:w-auto">
-            <Option />
-            <Option />
+            <span> Show Limit:</span>
+            <Option
+              Set={(e) => setItem(e)}
+              value={item}
+              option={[
+                { key: 5, value: 5 },
+                { key: 10, value: 10 },
+                { key: 20, value: 20 },
+                { key: 40, value: 40 },
+                { key: 50, value: 50 },
+              ]}
+            />
+            <span> Show page:</span>
+            <Option
+              Set={(e) => setPage(e)}
+              value={Page}
+              option={[
+                { key: 1, value: 1 },
+                { key: 2, value: 2 },
+                { key: 3, value: 3 },
+                { key: 4, value: 4 },
+                { key: 5, value: 5 },
+                { key: 6, value: 6 },
+                { key: 7, value: 7 },
+                { key: 8, value: 8 },
+                { key: 9, value: 9 },
+                { key: 10, value: 10 },
+              ]}
+            />
           </div>
         </div>
         <main className="flex-1 overflow-y-auto px-4 sm:px-8 py-6">
