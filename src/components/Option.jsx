@@ -11,8 +11,8 @@ const Option = ({ option, Set, value }) => {
         id="filter-select"
         label="Filter Search"
         value={value}
-        className="text-sm dark:text-gray-200"
-        onChange={(e) => Set(Number(e.target.value))}
+        className="text-sm shrink dark:text-gray-200"
+        onChange={(e) => Set(e.target.value)}
         sx={{
           color: "inherit",
           ".MuiOutlinedInput-notchedOutline": { border: "none" },

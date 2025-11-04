@@ -18,6 +18,7 @@ const App = () => {
   const [Page, setPage] = useState(1);
   const [Filter, setFilter] = useState("");
   const [DebouncedFilter, setDebouncedFilter] = useState("");
+  const [sortBy, setSortBy] = useState("market_cap_desc");
   const SwitchPages = (increment) => {
     clearTimeout(refPages);
     refPages.current = setTimeout(() => setPage(increment), 1000);
@@ -26,7 +27,9 @@ const App = () => {
     clearTimeout(RefItem);
     RefItem.current = setTimeout(() => setItem(() => increment), 1000);
   };
-
+  const Sort = (e) => {
+    setSortBy(e);
+  };
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
@@ -34,7 +37,7 @@ const App = () => {
       try {
         const url = DebouncedFilter
           ? `https://api.coingecko.com/api/v3/search?query=${DebouncedFilter}`
-          : `${key}&order=market_cap_desc&per_page=${item}&page=${Page}&sparkline=false`;
+          : `${key}&order=${sortBy}&per_page=${item}&page=${Page}&sparkline=false`;
         const res = await fetch(url, { signal });
         if (!res.ok)
           throw new Error(`network error status code: ${res.status}`);
@@ -51,7 +54,7 @@ const App = () => {
     };
     Fetch();
     return () => controller.abort();
-  }, [DebouncedFilter, Page, item]);
+  }, [DebouncedFilter, sortBy, Page, item]);
 
   useEffect(() => {
     const Time = setTimeout(() => setDebouncedFilter(Filter), 500);
@@ -113,14 +116,25 @@ const App = () => {
       <div className="bg-gray-100 dark:bg-gray-900 dark:text-white text-gray-600 min-h-screen flex flex-col">
         {/* ====== MAIN CONTENT ====== */}
         <Navbar />
-        <div className="flex flex-col sm:flex-row flex-wrap items-center justify-between gap-4 bg-gray-950  p-5 rounded-md shadow-lg mb-8  w-full transition-all duration-300 hover:shadow-emerald-500/10">
-          {/* Left group: Options + Search */}
-          <div className="w-full px-4 sm:max-w-2xl sm:mx-auto md:w-fit md:mx-0 lg:max-w-4xl">
+        <div className="flex flex-col md:flex-row flex-wrap items-start md:items-center justify-between gap-4 bg-gray-950 p-5 rounded-md shadow-lg mb-8 transition-all duration-300 hover:shadow-emerald-500/10">
+          {/* Left: Search */}
+          <div className="w-full md:flex-1 px-2 sm:max-w-xl lg:max-w-2xl">
             <Search value={Filter} search={setFilter} />
           </div>
 
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 w-full sm:w-auto">
-            <span> Show Limit:</span>
+          {/* Right: Options */}
+          <div className="flex flex-col md:flex-row md:flex-nowrap items-center justify-start gap-3 w-full md:w-auto">
+            <span className="whitespace-nowrap">Sort By:</span>
+            <Option
+              Set={(e) => Sort(e)}
+              value={sortBy}
+              option={[
+                { key: "market_cap_desc", value: "market_cap_desc" },
+                { key: "market_cap_asc", value: "market_cap_asc" },
+              ]}
+            />
+
+            <span className="whitespace-nowrap">Show Limit:</span>
             <Option
               Set={(e) => ExtendItems(e)}
               value={item}
@@ -132,8 +146,10 @@ const App = () => {
                 { key: 50, value: 50 },
                 { key: 80, value: 80 },
               ]}
+              className=""
             />
-            <span> Show page:</span>
+
+            <span className="whitespace-nowrap">Show Page:</span>
             <Option
               Set={(e) => SwitchPages(e)}
               value={Page}
@@ -152,6 +168,7 @@ const App = () => {
             />
           </div>
         </div>
+
         <main className="flex-1 overflow-y-auto px-4 sm:px-8 py-6">
           {/* ====== CONTROL BAR ====== */}
 
