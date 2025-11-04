@@ -19,6 +19,7 @@ const App = () => {
   const [Filter, setFilter] = useState("");
   const [DebouncedFilter, setDebouncedFilter] = useState("");
 
+  console.log(coin);
   const SwitchPages = (increment) => {
     clearTimeout(refPages);
     refPages.current = setTimeout(() => setPage(increment), 1000);
@@ -33,14 +34,14 @@ const App = () => {
     const signal = controller.signal;
     const Fetch = async () => {
       try {
-        const res = await fetch(
-          `${key}&order=market_cap_desc&per_page=${item}&page=${Page}&sparkline=false`,
-          { signal }
-        );
+        const url = DebouncedFilter
+          ? `https://api.coingecko.com/api/v3/search?query=${DebouncedFilter}`
+          : `${key}&order=market_cap_desc&per_page=${item}&page=${Page}&sparkline=false`;
+        const res = await fetch(url, { signal });
         if (!res.ok)
           throw new Error(`network error status code: ${res.status}`);
         const data = await res.json();
-        setCoin(data);
+        setCoin(DebouncedFilter ? data.coins : data);
         setLoading(false);
       } catch (error) {
         if (error.name !== "AbortError") {
@@ -52,7 +53,7 @@ const App = () => {
     };
     Fetch();
     return () => controller.abort();
-  }, [Page, item]);
+  }, [DebouncedFilter, Page, item]);
 
   useEffect(() => {
     const Time = setTimeout(() => setDebouncedFilter(Filter), 500);
@@ -172,6 +173,9 @@ const App = () => {
                   symbol,
                   high_24h,
                   ath_date,
+                  api_symbol,
+                  large,
+                  thumb,
                 }) => (
                   <CryptoCard
                     key={id}
@@ -185,6 +189,9 @@ const App = () => {
                     market_cap={market_cap}
                     high={high_24h}
                     price_change_24h={price_change_24h}
+                    thumb={thumb}
+                    large={large}
+                    api_symbol={api_symbol}
                   />
                 )
               )

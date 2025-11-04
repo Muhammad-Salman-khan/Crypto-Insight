@@ -13,6 +13,9 @@ const CryptoCard = ({
   low_24h,
   high,
   last_updated,
+  api_symbol,
+  large,
+  thumb,
 }) => {
   const isPositive = price_change_24h >= 0;
 
@@ -41,7 +44,7 @@ const CryptoCard = ({
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-3">
           <img
-            src={img}
+            src={img || large}
             alt={`${name} logo`}
             className="w-10 h-10 object-contain"
             loading="lazy"
@@ -62,7 +65,7 @@ const CryptoCard = ({
             <TrendingDownIcon fontSize="small" />
           )}
           {isPositive ? "+" : ""}
-          {Number(price_change_24h)?.toFixed(2) ?? 0}%
+          {price_change_24h ? Number(price_change_24h)?.toFixed(2) ?? 0 : ""}%
         </span>
       </div>
       <div className="grid grid-cols-2 gap-3 text-sm text-gray-300">
@@ -80,28 +83,34 @@ const CryptoCard = ({
           <span className="text-xs text-white">24h Low</span>
           <span className="text-red-600 font-bold">
             $
-            {Intl.NumberFormat("en-US", {
-              maximumFractionDigits: 2,
-            }).format(low_24h)}
+            {low_24h
+              ? Intl.NumberFormat("en-US", {
+                  maximumFractionDigits: 2,
+                }).format(low_24h)
+              : 0}
           </span>
         </div>
         <div className="flex flex-col text-right">
           <span className="text-xs text-gray-500">24h High</span>
           <span className="text-green-400">
             $
-            {Intl.NumberFormat("en-US", {
-              maximumFractionDigits: 2,
-            }).format(high)}
+            {high
+              ? Intl.NumberFormat("en-US", {
+                  maximumFractionDigits: 2,
+                }).format(high)
+              : 0}
           </span>
         </div>
       </div>
       <div className="mt-4 text-[11px] text-gray-500 text-right">
-        {Intl.DateTimeFormat("en-US", {
-          weekday: "short",
-          day: "numeric",
-          month: "numeric",
-          year: "numeric",
-        }).format(new Date(last_updated))}
+        {last_updated
+          ? Intl.DateTimeFormat("en-US", {
+              weekday: "short",
+              day: "numeric",
+              month: "numeric",
+              year: "numeric",
+            }).format(new Date(last_updated))
+          : null}
       </div>
     </div>
   );
