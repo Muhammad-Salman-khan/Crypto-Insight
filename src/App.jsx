@@ -16,6 +16,9 @@ const App = () => {
   const [error, setError] = useState(null);
   const [item, setItem] = useState(10);
   const [Page, setPage] = useState(1);
+  const [Filter, setFilter] = useState("");
+  const [DebouncedFilter, setDebouncedFilter] = useState("");
+
   const SwitchPages = (increment) => {
     clearTimeout(refPages);
     refPages.current = setTimeout(() => setPage(increment), 1000);
@@ -50,6 +53,18 @@ const App = () => {
     Fetch();
     return () => controller.abort();
   }, [Page, item]);
+
+  useEffect(() => {
+    const Time = setTimeout(() => setDebouncedFilter(Filter), 500);
+    return () => clearTimeout(Time);
+  }, [Filter]);
+
+  const FilterdCoins = coin?.filter((coin) => {
+    return (
+      coin.name.toLowerCase().includes(DebouncedFilter.toLowerCase()) ||
+      coin.symbol.toLowerCase().includes(DebouncedFilter.toLowerCase())
+    );
+  });
   if (loading) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
@@ -68,6 +83,7 @@ const App = () => {
       </div>
     );
   }
+
   if (error) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50 p-4">
@@ -101,7 +117,7 @@ const App = () => {
         <div className="flex flex-col sm:flex-row flex-wrap items-center justify-between gap-4 bg-gray-950  p-5 rounded-md shadow-lg mb-8  w-full transition-all duration-300 hover:shadow-emerald-500/10">
           {/* Left group: Options + Search */}
           <div className="w-full px-4 sm:max-w-2xl sm:mx-auto md:w-fit md:mx-0 lg:max-w-4xl">
-            <Search />
+            <Search value={Filter} search={setFilter} />
           </div>
 
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 w-full sm:w-auto">
@@ -115,6 +131,7 @@ const App = () => {
                 { key: 20, value: 20 },
                 { key: 40, value: 40 },
                 { key: 50, value: 50 },
+                { key: 80, value: 80 },
               ]}
             />
             <span> Show page:</span>
@@ -141,34 +158,38 @@ const App = () => {
 
           {/* ====== CRYPTO CARDS GRID ====== */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {coin?.map(
-              ({
-                id,
-                image,
-                last_updated,
-                low_24h,
-                market_cap,
-                market_cap_rank,
-                name,
-                price_change_24h,
-                symbol,
-                high_24h,
-                ath_date,
-              }) => (
-                <CryptoCard
-                  key={id}
-                  img={image}
-                  last_updated={last_updated}
-                  low_24h={low_24h}
-                  name={name}
-                  ath_date={ath_date}
-                  symbol={symbol}
-                  market_cap_rank={market_cap_rank}
-                  market_cap={market_cap}
-                  high={high_24h}
-                  price_change_24h={price_change_24h}
-                />
+            {FilterdCoins.length > 0 ? (
+              FilterdCoins.map(
+                ({
+                  id,
+                  image,
+                  last_updated,
+                  low_24h,
+                  market_cap,
+                  market_cap_rank,
+                  name,
+                  price_change_24h,
+                  symbol,
+                  high_24h,
+                  ath_date,
+                }) => (
+                  <CryptoCard
+                    key={id}
+                    img={image}
+                    last_updated={last_updated}
+                    low_24h={low_24h}
+                    name={name}
+                    ath_date={ath_date}
+                    symbol={symbol}
+                    market_cap_rank={market_cap_rank}
+                    market_cap={market_cap}
+                    high={high_24h}
+                    price_change_24h={price_change_24h}
+                  />
+                )
               )
+            ) : (
+              <span> No Search found</span>
             )}
           </div>
         </main>

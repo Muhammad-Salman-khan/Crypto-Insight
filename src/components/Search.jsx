@@ -1,12 +1,14 @@
 import { TextField, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-const Search = () => {
+const Search = ({ value, search }) => {
   return (
     <div className="w-full sm:w-80 md:w-96 lg:w-md transition-all">
       <TextField
         id="fullWidth"
         fullWidth
+        value={value}
+        onChange={(e) => search(e.target.value)}
         placeholder="Search any coin..."
         variant="outlined"
         sx={{
