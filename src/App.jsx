@@ -61,12 +61,14 @@ const App = () => {
     return () => clearTimeout(Time);
   }, [Filter]);
 
-  const FilterdCoins = coin?.filter((coin) => {
-    return (
-      coin.name.toLowerCase().includes(DebouncedFilter.toLowerCase()) ||
-      coin.symbol.toLowerCase().includes(DebouncedFilter.toLowerCase())
-    );
-  });
+  const FilterdCoins = coin
+    ?.filter((coin) => {
+      return (
+        coin.name.toLowerCase().includes(DebouncedFilter.toLowerCase()) ||
+        coin.symbol.toLowerCase().includes(DebouncedFilter.toLowerCase())
+      );
+    })
+    .slice();
   if (loading) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
