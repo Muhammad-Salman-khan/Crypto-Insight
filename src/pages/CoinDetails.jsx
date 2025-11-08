@@ -170,8 +170,8 @@ const CoinDetails = () => {
                     "%"
                   : "N/A"}
               </p>
-              <p className="text-gray-300 text-sm">
-                {coin.categories?.slice(0, 3).join(", ") || "N/A"}
+              <p className="text-white break-after-all text-[14px]">
+                {coin.categories.slice(0, 2).join(",") || "N/A"}
               </p>
             </div>
 
