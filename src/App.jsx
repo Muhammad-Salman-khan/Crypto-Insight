@@ -9,6 +9,7 @@ import CryptoCard from "./components/CryptoCard.jsx";
 import Home from "./pages/Home.jsx";
 import { Route, Routes } from "react-router";
 import NotFound from "./pages/NotFound.jsx";
+import About from "./pages/About.jsx";
 const App = () => {
   const key = import.meta.env.VITE_API_KEY;
 
@@ -118,6 +119,7 @@ const App = () => {
 
   return (
     <>
+      <Navbar />
       <Routes>
         <Route
           path="/"
@@ -138,6 +140,7 @@ const App = () => {
             />
           }
         />
+        <Route path="/about" element={<About />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

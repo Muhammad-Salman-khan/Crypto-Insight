@@ -1,11 +1,12 @@
 import Logo from "../assets/logo.svg";
 import { IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import { Link } from "react-router";
 const Navbar = () => {
   return (
     <>
-      <div className="w-full bg-gray-950 border-b border-gray-800 flex ">
-        <div className="max-w-7xl mx-auto flex items-center justify-center px-4 sm:px-6 py-3">
+      <div className="max-w-full  bg-gray-950 border-b border-gray-800 flex justify-around align-middle items-center">
+        <div className="flex justify-center align-middle items-center p-4">
           {/* Left: Logo and brand */}
           <div className="flex items-center gap-3">
             <img
@@ -13,20 +14,24 @@ const Navbar = () => {
               alt="Crypto Insight Logo"
               className="w-9 h-9 rounded-full object-cover"
             />
-            <h1 className="text-white font-semibold text-lg tracking-tight">
-              Crypto Insight
-            </h1>
+            <Link to="/">
+              <h1 className="text-white font-semibold text-lg tracking-tight">
+                Crypto Insight
+              </h1>
+            </Link>
           </div>
-
-          {/* Right: Menu button (mobile) */}
-          <div className="flex items-center gap-4">
-            {/* You can later add theme toggler, profile, notifications, etc. */}
-            <IconButton
-              className="text-gray-400 hover:text-white lg:hidden"
-              size="small"
-            >
-              <MenuIcon fontSize="medium" />
-            </IconButton>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="flex gap-2">
+            <Link to="/about">
+              <button
+                className="bg-white text-purple-700 p-2 text-[15px] rounded-lg font-semibold 
+            hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-100 
+            dark:hover:bg-gray-600 transition"
+              >
+                About
+              </button>
+            </Link>
           </div>
         </div>
       </div>

@@ -18,7 +18,6 @@ const Home = ({
     <>
       <div className="bg-gray-100 dark:bg-gray-900 dark:text-white text-gray-600 min-h-screen flex flex-col">
         {/* ====== MAIN CONTENT ====== */}
-        <Navbar />
         <div className="flex flex-col md:flex-row flex-wrap items-start md:items-center justify-between gap-4 bg-gray-950 p-5 rounded-md shadow-lg mb-8 transition-all duration-300 hover:shadow-emerald-500/10">
           {/* Left: Search */}
           <div className="w-full md:flex-1 px-2 sm:max-w-xl lg:max-w-2xl">
