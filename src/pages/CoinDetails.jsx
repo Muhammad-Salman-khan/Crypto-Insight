@@ -192,7 +192,7 @@ const CoinDetails = () => {
             </Typography>
 
             {/* Chart */}
-            <div className="mt-6  w-full">
+            <div className="  w-full">
               <CoinChart id={id} />
             </div>
 
