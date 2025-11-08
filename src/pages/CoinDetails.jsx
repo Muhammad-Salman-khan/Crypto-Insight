@@ -8,7 +8,10 @@ import {
   Chip,
   Button,
   Divider,
+  Alert,
+  Stack,
 } from "@mui/material";
+import CoinChart from "../components/CoinChart.jsx";
 const CoinDetails = () => {
   const { id } = useParams();
   const Key = import.meta.env.VITE_COIN_API;
@@ -70,7 +73,6 @@ const CoinDetails = () => {
             },
           }}
           spacing={2}
-          className={` bg-red-100 dark:bg-red-900 border-l-4 border-red-500 dark:border-red-700 text-red-900 dark:text-red-100 p-2 rounded-lg flex items-center transition duration-300 ease-in-out hover:bg-red-200 dark:hover:bg-red-800 transform hover:scale-105`}
         >
           <Alert
             severity="error"
@@ -84,220 +86,141 @@ const CoinDetails = () => {
   }
   return (
     <>
-      <div className="min-h-screen flex justify-center align-middle items-center p-2 max-w-screen bg-gray-900 text-white">
-        <div className="max-w-md w-full shadow-2xl rounded-3xl bg-stone-950 text-white">
-          <div className="flex justify-end align-middle items-center p-3">
+      <div className="min-h-screen flex justify-center items-center bg-linear-to-br from-gray-900 via-stone-900 to-black text-white p-4">
+        <div className="w-full max-w-lg backdrop-blur-xl bg-white/5 border border-white/20 rounded-3xl shadow-2xl overflow-hidden">
+          <div className="flex justify-end items-center p-5 ">
             <Link to="/">
-              <button
-                className="bg-white text-purple-700 p-2 rounded-lg font-semibold 
-            hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-100 
-            dark:hover:bg-gray-600 transition"
-              >
-                back
+              <button className="px-3 py-1.5 rounded-lg bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 font-semibold text-sm transition-all">
+                ← Back
               </button>
             </Link>
           </div>
-          <CardContent className="flex flex-col items-center space-y-6">
-            {/* --- Top: Image + Name --- */}
-            <img
-              src={coin.image && coin.image.large}
-              alt={coin.name}
-              className="w-28 h-28 rounded-full shadow-xl border-2 border-gray-600"
-            />
-            <Typography variant="h4" className="font-bold text-center">
-              {coin.name}{" "}
-              <span className="text-white text-lg">
-                ({coin.symbol ? coin.symbol.toUpperCase() : ""})
-              </span>
-            </Typography>
 
-            {/* --- Rank Badge --- */}
-            <Chip
-              label={`Rank #${
-                coin.market_data && coin.market_data.market_cap_rank
-                  ? coin.market_data.market_cap_rank
-                  : "N/A"
-              }`}
-              sx={{ color: "#ffffff", fontWeight: "600" }}
-            />
-
-            <Divider className="w-full border-gray-600 my-4" />
-
-            {/* --- Market Stats --- */}
-            <div className="w-full grid grid-cols-2 gap-3 text-center">
-              <div>
-                <Typography variant="body2" className="text-white">
-                  💰 Current Price
-                </Typography>
-                <Typography
-                  variant="h6"
-                  className="text-green-400 font-semibold"
-                >
-                  {coin.market_data &&
-                  coin.market_data.current_price &&
-                  coin.market_data.current_price.usd
-                    ? "$" + coin.market_data.current_price.usd.toLocaleString()
-                    : "N/A"}
-                </Typography>
-              </div>
-
-              <div>
-                <Typography variant="body2" className="text-white">
-                  📈 24h High
-                </Typography>
-                <Typography variant="h6" className="text-green-300">
-                  {coin.market_data &&
-                  coin.market_data.high_24h &&
-                  coin.market_data.high_24h.usd
-                    ? "$" + coin.market_data.high_24h.usd.toLocaleString()
-                    : "N/A"}
-                </Typography>
-              </div>
-
-              <div>
-                <Typography variant="body2" className="text-white">
-                  📉 24h Low
-                </Typography>
-                <Typography variant="h6" className="text-red-400">
-                  {coin.market_data &&
-                  coin.market_data.low_24h &&
-                  coin.market_data.low_24h.usd
-                    ? "$" + coin.market_data.low_24h.usd.toLocaleString()
-                    : "N/A"}
-                </Typography>
-              </div>
-
-              <div>
-                <Typography variant="body2" className="text-white">
-                  💹 Market Cap
-                </Typography>
-                <Typography variant="h6" className="text-blue-300">
-                  {coin.market_data &&
-                  coin.market_data.market_cap &&
-                  coin.market_data.market_cap.usd
-                    ? "$" + coin.market_data.market_cap.usd.toLocaleString()
-                    : "N/A"}
-                </Typography>
-              </div>
-
-              <div>
-                <Typography variant="body2" className="text-white">
-                  📊 24h Volume
-                </Typography>
-                <Typography variant="h6" className="text-purple-300">
-                  {coin.market_data &&
-                  coin.market_data.total_volume &&
-                  coin.market_data.total_volume.usd
-                    ? "$" + coin.market_data.total_volume.usd.toLocaleString()
-                    : "N/A"}
-                </Typography>
-              </div>
-
-              <div>
-                <Typography variant="body2" className="text-white">
-                  🌐 Fully Diluted Valuation
-                </Typography>
-                <Typography variant="h6" className="text-indigo-300">
-                  {coin.market_data &&
-                  coin.market_data.fully_diluted_valuation &&
-                  coin.market_data.fully_diluted_valuation.usd
-                    ? "$" +
-                      coin.market_data.fully_diluted_valuation.usd.toLocaleString()
-                    : "N/A"}
-                </Typography>
-              </div>
-
-              <div>
-                <Typography variant="body2" className="text-white">
-                  24h Change
-                </Typography>
-                <Typography
-                  variant="h6"
-                  className={`font-semibold ${
-                    coin.market_data &&
-                    coin.market_data.price_change_percentage_24h >= 0
-                      ? "text-green-400"
-                      : "text-red-400"
-                  }`}
-                >
-                  {coin.market_data &&
-                  typeof coin.market_data.price_change_percentage_24h ===
-                    "number"
-                    ? coin.market_data.price_change_percentage_24h.toFixed(2) +
-                      "%"
-                    : "N/A"}
-                </Typography>
-              </div>
-              <div>
-                <Typography variant="body2" className="text-white">
-                  Categories
-                </Typography>
-                <Typography
-                  variant="p"
-                  className={`font-semibold ${
-                    coin.categories && coin.categories.length > 0
-                      ? "text-green-400 text-[15px]"
-                      : "text-red-400"
-                  }`}
-                >
-                  {coin.categories && coin.categories
-                    ? coin.categories.splice(0, 3).join(", ")
-                    : "N/A"}
-                </Typography>
-              </div>
+          <CardContent className="flex flex-col items-center space-y-6 p-6">
+            <div className="flex flex-col items-center space-y-2">
+              <img
+                src={coin.image?.large}
+                alt={coin.name}
+                className="w-24 h-24 rounded-full border-4 border-purple-500 shadow-lg"
+              />
+              <Typography
+                variant="h4"
+                className="font-extrabold text-center text-white drop-shadow-md"
+              >
+                {coin.name}{" "}
+                <span className="text-purple-300 text-lg">
+                  ({coin.symbol?.toUpperCase()})
+                </span>
+              </Typography>
+              <Chip
+                label={`Rank #${coin.market_data?.market_cap_rank ?? "N/A"}`}
+                sx={{
+                  backgroundColor: "rgba(147, 51, 234, 0.2)",
+                  color: "#E9D5FF",
+                  fontWeight: 600,
+                }}
+              />
             </div>
 
-            <Divider className="w-full border-gray-600 my-4" />
+            {/* Market Stats */}
+            <div className="grid grid-cols-2 gap-5 w-full text-center mt-4">
+              {[
+                ["💰 Price", coin.market_data?.current_price?.usd, "green-400"],
+                ["📈 24h High", coin.market_data?.high_24h?.usd, "green-300"],
+                ["📉 24h Low", coin.market_data?.low_24h?.usd, "red-400"],
+                [
+                  "💹 Market Cap",
+                  coin.market_data?.market_cap?.usd,
+                  "blue-400",
+                ],
+                [
+                  "📊 24h Volume",
+                  coin.market_data?.total_volume?.usd,
+                  "purple-400",
+                ],
+                [
+                  "🌐 FDV",
+                  coin.market_data?.fully_diluted_valuation?.usd,
+                  "indigo-400",
+                ],
+              ].map(([label, value, color]) => (
+                <div
+                  key={label}
+                  className="bg-white/5 p-3 rounded-2xl hover:bg-white/10 transition-all"
+                >
+                  <p className="text-gray-300 text-sm">{label}</p>
+                  <p className={`text-${color} text-lg font-semibold`}>
+                    {value ? "$" + value.toLocaleString() : "N/A"}
+                  </p>
+                </div>
+              ))}
+            </div>
 
-            {/* --- Other Info --- */}
-            <Typography variant="body2" className="text-gray-300">
-              ⛏ Algorithm: {coin.hashing_algorithm || "N/A"}
-            </Typography>
-            <Typography variant="body2" className="text-gray-300">
-              📅 Genesis Date: {coin.genesis_date || "Unknown"}
-            </Typography>
+            {/* 24h Change + Categories */}
+            <div className="flex justify-between items-center w-full mt-2 px-2">
+              <p
+                className={`font-bold ${
+                  coin.market_data?.price_change_percentage_24h >= 0
+                    ? "text-green-400"
+                    : "text-red-400"
+                }`}
+              >
+                {coin.market_data?.price_change_percentage_24h
+                  ? coin.market_data.price_change_percentage_24h.toFixed(2) +
+                    "%"
+                  : "N/A"}
+              </p>
+              <p className="text-gray-300 text-sm">
+                {coin.categories?.slice(0, 3).join(", ") || "N/A"}
+              </p>
+            </div>
 
-            {/* --- Description --- */}
+            <Divider className="w-full border-white/10 my-4" />
+
+            {/* Info */}
+            <div className="space-y-1 text-sm text-gray-300 text-center">
+              <p>⛏ Algorithm: {coin.hashing_algorithm || "N/A"}</p>
+              <p>📅 Genesis: {coin.genesis_date || "Unknown"}</p>
+            </div>
+
+            {/* Description */}
             <Typography
               variant="body2"
-              className="text-sm text-white text-center line-clamp-4"
+              className="text-sm text-gray-200 text-center line-clamp-4 mt-4 italic"
             >
-              {coin.description && coin.description.en
-                ? coin.description.en
-                : "No description available."}
+              {coin.description?.en || "No description available."}
             </Typography>
 
-            {/* --- Links --- */}
-            <div className="flex flex-wrap justify-center gap-3 pt-3">
-              {coin.links && coin.links.homepage && coin.links.homepage[0] && (
+            {/* Chart */}
+            <div className="mt-6  w-full">
+              <CoinChart id={id} />
+            </div>
+
+            {/* Links */}
+            <div className="flex flex-wrap justify-center gap-3 mt-4">
+              {coin.links?.homepage?.[0] && (
                 <Button
                   href={coin.links.homepage[0]}
                   target="_blank"
-                  variant="contained"
-                  color="primary"
-                  size="small"
+                  className="bg-purple-600 hover:bg-purple-700 text-white"
                 >
                   Website
                 </Button>
               )}
-              {coin.links && coin.links.twitter_screen_name && (
+              {coin.links?.twitter_screen_name && (
                 <Button
                   href={`https://twitter.com/${coin.links.twitter_screen_name}`}
                   target="_blank"
-                  variant="outlined"
-                  color="info"
-                  size="small"
+                  className="bg-sky-600 hover:bg-sky-700 text-white"
                 >
                   Twitter
                 </Button>
               )}
-              {coin.links && coin.links.subreddit_url && (
+              {coin.links?.subreddit_url && (
                 <Button
                   href={coin.links.subreddit_url}
                   target="_blank"
-                  variant="outlined"
-                  color="secondary"
-                  size="small"
+                  className="bg-orange-600 hover:bg-orange-700 text-white"
                 >
                   Reddit
                 </Button>
