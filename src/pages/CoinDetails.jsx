@@ -195,17 +195,6 @@ const CoinDetails = () => {
 
               <div>
                 <Typography variant="body2" className="text-white">
-                  🏛 Circulating Supply
-                </Typography>
-                <Typography variant="h6" className="text-yellow-300">
-                  {coin.market_data && coin.market_data.circulating_supply
-                    ? coin.market_data.circulating_supply.toLocaleString()
-                    : "N/A"}
-                </Typography>
-              </div>
-
-              <div>
-                <Typography variant="body2" className="text-white">
                   🌐 Fully Diluted Valuation
                 </Typography>
                 <Typography variant="h6" className="text-indigo-300">
@@ -236,6 +225,23 @@ const CoinDetails = () => {
                     "number"
                     ? coin.market_data.price_change_percentage_24h.toFixed(2) +
                       "%"
+                    : "N/A"}
+                </Typography>
+              </div>
+              <div>
+                <Typography variant="body2" className="text-white">
+                  Categories
+                </Typography>
+                <Typography
+                  variant="p"
+                  className={`font-semibold ${
+                    coin.categories && coin.categories.length > 0
+                      ? "text-green-400 text-[15px]"
+                      : "text-red-400"
+                  }`}
+                >
+                  {coin.categories && coin.categories
+                    ? coin.categories.splice(0, 3).join(", ")
                     : "N/A"}
                 </Typography>
               </div>
