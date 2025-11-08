@@ -7,7 +7,7 @@ It lets users explore live crypto market data, track individual coins in real ti
 
 ## 🚀 Live Demo
 
-🔗 **Deployed on Vercel:** [https://crypto-insight.vercel.app](https://crypto-insight.vercel.app)
+🔗 **Deployed on Vercel:** https://crypto-insight-swart.vercel.app/)
 
 ---
 
