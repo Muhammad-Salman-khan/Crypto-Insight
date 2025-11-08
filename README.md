@@ -1,16 +1,52 @@
-# React + Vite
+# 💹 Crypto Insight
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Crypto Insight** is a modern cryptocurrency analytics web app built with React 19, Vite, TailwindCSS, and Material UI — powered by the **CoinGecko API**.  
+It lets users explore live crypto market data, track individual coins in real time, view detailed analytics through interactive charts, and switch between ascending/descending order with smooth navigation.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Live Demo
 
-## React Compiler
+🔗 **Deployed on Vercel:** [https://crypto-insight.vercel.app](https://crypto-insight.vercel.app)
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+---
 
-## Expanding the ESLint configuration
+## ⚙️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+| Category              | Technologies                                               |
+| --------------------- | ---------------------------------------------------------- |
+| **Frontend**          | React 19, Vite (Rolldown), TailwindCSS 4, MUI 7            |
+| **Charts & Data**     | Chart.js 4, react-chartjs-2, date-fns                      |
+| **Routing**           | React Router 7                                             |
+| **State & Utilities** | React Hooks, Lucide Icons, Loader Spinner                  |
+| **API**               | CoinGecko Public API (coins, search, and detail endpoints) |
+| **Package Manager**   | pnpm                                                       |
+
+---
+
+## 🧩 Features
+
+- ⚡ **Real-time Market Data** — fetches live crypto data from CoinGecko
+- 🔍 **Smart Search System** — dynamically search any crypto coin
+- 📊 **Dynamic Line Charts** — built using Chart.js with time-based scales
+- 🔄 **Ascending/Descending Sorting** — toggle coin lists by market trends
+- 📱 **Fully Responsive Design** — optimized for all devices
+- 🧭 **Client-side Routing** — fast navigation via React Router 7
+- 💥 **Error & Loading States** — clean handling of API failures and delays
+
+---
+
+## 🔌 API Integration
+
+Crypto Insight integrates with **CoinGecko’s REST API**, using four endpoints:
+
+1. **/coins/markets** – Fetches live market data for multiple coins
+2. **/coins/{id}** – Retrieves detailed data for a selected coin
+3. **/search** – Enables live search by name or symbol
+4. **/coins/{id}/market_chart** – Provides historical data for chart visualization
+
+Each API call includes error handling, loading states, and pagination control.
+
+---
+
+## 🧠 Project Architecture
