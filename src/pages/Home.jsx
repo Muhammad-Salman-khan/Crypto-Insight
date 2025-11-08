@@ -16,7 +16,7 @@ const Home = ({
 }) => {
   return (
     <>
-      <div className="bg-gray-100 dark:bg-gray-900 dark:text-white text-gray-600 min-h-screen flex flex-col">
+      <div className="bg-gray-900 text-white min-h-screen flex flex-col">
         {/* ====== MAIN CONTENT ====== */}
         <div className="flex flex-col md:flex-row flex-wrap items-start md:items-center justify-between gap-4 bg-gray-950 p-5 rounded-md shadow-lg mb-8 transition-all duration-300 hover:shadow-emerald-500/10">
           {/* Left: Search */}
@@ -96,6 +96,7 @@ const Home = ({
                 }) => (
                   <CryptoCard
                     key={id}
+                    id={id}
                     img={image}
                     last_updated={last_updated}
                     low_24h={low_24h}

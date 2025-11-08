@@ -10,6 +10,7 @@ import Home from "./pages/Home.jsx";
 import { Route, Routes } from "react-router";
 import NotFound from "./pages/NotFound.jsx";
 import About from "./pages/About.jsx";
+import CoinDetails from "./pages/CoinDetails.jsx";
 const App = () => {
   const key = import.meta.env.VITE_API_KEY;
 
@@ -141,6 +142,7 @@ const App = () => {
           }
         />
         <Route path="/about" element={<About />} />
+        <Route path="/coin/:id" element={<CoinDetails />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
